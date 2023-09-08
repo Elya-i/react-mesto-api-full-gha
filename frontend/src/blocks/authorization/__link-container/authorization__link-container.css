@@ -1,0 +1,11 @@
+.authorization__link-container {
+  width: 100%;
+  padding-top: 15px;
+  text-align: center;
+}
+
+@media screen and (max-width: 620px) {
+  .authorization__link-container {
+    padding-top: 20px;
+  }
+}

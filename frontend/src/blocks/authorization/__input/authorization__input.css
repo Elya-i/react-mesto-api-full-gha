@@ -1,0 +1,17 @@
+.authorization__input {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  border: none;
+  border-bottom: 2px solid #cccccc;
+  background-color: transparent;
+  color: inherit;
+  outline: none;
+  padding: 0 0 13px;
+  height: 27px;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

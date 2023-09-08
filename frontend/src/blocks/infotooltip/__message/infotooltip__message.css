@@ -1,0 +1,15 @@
+.infotooltip__message {
+  margin: 0 0 23px;
+  font-size: 24px;
+  line-height: 29px;
+  font-weight: 900;
+  text-align: center;
+}
+
+@media screen and (max-width: 620px) {
+  .infotooltip__message {
+    margin-bottom: 13px;
+    font-size: 20px;
+    line-height: 24.2px;  
+  }
+}
