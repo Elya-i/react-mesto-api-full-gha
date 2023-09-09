@@ -71,14 +71,14 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('api/signup', validateCreateUser, createUser);
-app.post('api/signin', validateLoginUser, loginUser);
-app.post('api/signout', logoutUser);
+app.post('/signup', validateCreateUser, createUser);
+app.post('/signin', validateLoginUser, loginUser);
+app.post('/signout', logoutUser);
 
 app.use(auth);
 
-app.use('api/cards', cardRouter);
-app.use('api/users', userRouter);
+app.use('/cards', cardRouter);
+app.use('/users', userRouter);
 
 app.use('*', (req, res, next) => {
   next(new NotFoundError('Запрашиваемая страница не найдена'));
