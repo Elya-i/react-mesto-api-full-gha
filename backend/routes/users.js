@@ -9,6 +9,6 @@ router.get('/me', getCurrentUser);
 router.get('/:userId', validateUserId, getUserById);
 
 router.patch('/me', validateUserUpdate, updateUser);
-router.patch('/me/avatar', updateUserAvatar, validateUpdateUserAvatar);
+router.patch('/me/avatar', validateUpdateUserAvatar, updateUserAvatar);
 
 module.exports = router;
