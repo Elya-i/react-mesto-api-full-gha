@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
@@ -20,6 +21,7 @@ const app = express();
 const allowedCors = [
   'https://elya-i.students.nomoredomainsicu.ru',
   'https://api.elya-i.mesto.nomoredomainsicu.ru',
+  'localhost:3000',
   'http://localhost:3000',
 ];
 
