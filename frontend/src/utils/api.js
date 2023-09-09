@@ -1,6 +1,7 @@
 class Api {
-  constructor(url) {
-    this._url = url;
+  constructor(options) {
+    this._url = options.url;
+    this._header = options.hraders;
   }
 
   _checkServerResponse(response) {
@@ -20,30 +21,24 @@ class Api {
   getCardList() {
     return this._request(`${this._url}/cards`, {
       method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-type': 'application/json'
-      },
+      credentials: 'include',
+      headers: this._headers,
     })
   }
 
   getUserData() {
     return this._request(`${this._url}/users/me`, {
       method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-type': 'application/json'
-      },
+      credentials: 'include',
+      headers: this._headers,
     })
   }
 
   sendUserData(userData) {
     return this._request(`${this._url}/users/me`, {
       method: 'PATCH',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-type': 'application/json'
-      },
+      credentials: 'include',
+      headers: this._headers,
       body: JSON.stringify({name: userData.name, about: userData.about})
     })
   }
@@ -51,10 +46,8 @@ class Api {
   postNewCard(cardData) {
     return this._request(`${this._url}/cards`, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-type': 'application/json'
-      },
+      credentials: 'include',
+      headers: this._headers,
       body: JSON.stringify({name: cardData.imageName, link: cardData.imageLink})
     })
   }
@@ -62,20 +55,16 @@ class Api {
   deleteCard(cardId) {
     return this._request(`${this._url}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-type': 'application/json'
-      },
+      credentials: 'include',
+      headers: this._headers,
     })
   }
 
   updateUserAvatar(userData) {
     return this._request(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-type': 'application/json'
-      },
+      credentials: 'include',
+      headers: this._headers,
       body: JSON.stringify({ avatar: userData.avatar })
     })
   }
@@ -84,23 +73,25 @@ class Api {
     if (isLiked) {
       return this._request(`${this._url}/cards/${cardId}/likes`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-          'Content-type': 'application/json'
-        },
+        credentials: 'include',
+        headers: this._headers,
       })
     } else {
       return this._request(`${this._url}/cards/${cardId}/likes`, {
         method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-          'Content-type': 'application/json'
-        },
+        credentials: 'include',
+        headers: this._headers,
       })
     }
   }
 }
 
-const api = new Api('https://api.elya-i.mesto.nomoredomainsicu.ru')
+const api = new Api({
+  url: 'https://elya-i.students.nomoredomainsicu.ru',
+  credentials: 'include',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
 
 export default api;

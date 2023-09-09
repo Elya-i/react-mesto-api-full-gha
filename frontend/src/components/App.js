@@ -44,12 +44,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    checkToken();
-  }, [])
-
-  useEffect(() => {
-    const jwt = localStorage.getItem('jwt')
-    if (jwt) {
+    if (loggedIn) {
       Promise.all([api.getUserData(), api.getCardList()])
       .then(([userData, cardList]) => {
         setCurrentUser(userData);
@@ -78,9 +73,10 @@ function App() {
     setInfoTooltipLoading(true);
     auth.authorize(email, password)
     .then(() => {
+      localStorage.setItem('jwt', true);
       setEmail(email)
       setLoggedIn(true);
-      navigate('/');
+      navigate('/', { replace: true });
     })
     .catch(() => {
       setLoggedIn(false);
@@ -91,20 +87,30 @@ function App() {
   }
 
   function handleSignOut() {
-    localStorage.removeItem('jwt');
-    setLoggedIn(false);
-    setEmail('');
-    navigate('/sign-in');
-  }
+    auth.logout()
+    .then(() => {
+      localStorage.removeItem('jwt');
+      setLoggedIn(false);
+      setEmail('');
+      navigate('/signin', { replace: true });
+    })
+    .catch(err => console.log(err));
+};
+
+  useEffect(() => {
+    checkToken();
+  }, [])
 
   function checkToken()  {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       auth.checkToken(jwt)
-      .then(({ data }) => {
-        setLoggedIn(true);
-        setEmail(data.email);
-        navigate('/');
+      .then(res => {
+        if (res) {
+          setEmail(res.data.email);
+          setLoggedIn(true);
+          navigate('/', {replace: true});
+        }
       })
       .catch(() => {
         setLoggedIn(false);
@@ -225,9 +231,9 @@ function App() {
             onCardLike={handleCardLike}
             onCardDelete={handleConfirmationClick}
           />} />
-          <Route path="/sign-up" element={<Register submitText={isInfoTooltipLoading ? "Регистрация..." : "Зарегистрироваться"} onRegister={handleRegister} />} />
-          <Route path="/sign-in" element={<Login submitText={isInfoTooltipLoading ? "Вход..." : "Войти"} onLogin={handleLogin}/>} />
-          <Route path="*" element={loggedIn ? <Navigate to="/" replace /> : <Navigate to="/sign-in" replace />} />
+          <Route path="/signup" element={<Register submitText={isInfoTooltipLoading ? "Регистрация..." : "Зарегистрироваться"} onRegister={handleRegister} />} />
+          <Route path="/signin" element={<Login submitText={isInfoTooltipLoading ? "Вход..." : "Войти"} onLogin={handleLogin}/>} />
+          <Route path="*" element={loggedIn ? <Navigate to="/" replace /> : <Navigate to="/signin" replace />} />
         </Routes>
 
         {loggedIn && <Footer />}

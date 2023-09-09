@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 
 const cardRouter = require('./routes/cards');
 const userRouter = require('./routes/users');
-const { createUser, loginUser } = require('./controllers/users');
+const { createUser, loginUser, logoutUser } = require('./controllers/users');
 
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/error-handler');
@@ -18,6 +18,7 @@ const { validateLoginUser, validateCreateUser } = require('./utils/validation/re
 
 const app = express();
 app.use(cors());
+app.use(cookieParser());
 
 const {
   PORT = 3000,
@@ -35,8 +36,6 @@ app.use(helmet());
 
 app.use(express.json());
 
-app.use(cookieParser());
-
 app.use(requestLogger);
 
 app.get('/crash-test', () => {
@@ -47,6 +46,7 @@ app.get('/crash-test', () => {
 
 app.post('/signup', validateCreateUser, createUser);
 app.post('/signin', validateLoginUser, loginUser);
+app.post('/signout', logoutUser);
 
 app.use(auth);
 
