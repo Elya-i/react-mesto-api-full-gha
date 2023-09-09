@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://elya-i.students.nomoredomainsicu.ru'
+export const BASE_URL = 'https://api.elya-i.mesto.nomoredomainsicu.ru'
 
 const checkServerResponse = (response) => {
   if (response.ok) {

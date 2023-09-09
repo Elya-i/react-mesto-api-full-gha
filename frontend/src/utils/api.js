@@ -87,7 +87,7 @@ class Api {
 }
 
 const api = new Api({
-  url: 'https://elya-i.students.nomoredomainsicu.ru',
+  url: 'https://api.elya-i.mesto.nomoredomainsicu.ru',
   credentials: 'include',
   headers: {
     'Content-Type': 'application/json'
