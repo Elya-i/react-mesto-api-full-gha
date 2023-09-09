@@ -105,12 +105,10 @@ function App() {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       auth.checkToken(jwt)
-      .then(res => {
-        if (res) {
-          setEmail(res.data.email);
-          setLoggedIn(true);
-          navigate('/', {replace: true});
-        }
+      .then(({ data }) => {
+        setLoggedIn(true);
+        setEmail(data.email);
+        navigate('/', {replace: true});
       })
       .catch(() => {
         setLoggedIn(false);

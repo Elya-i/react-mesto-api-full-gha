@@ -42,7 +42,7 @@ function Register({ onRegister, submitText}) {
             <button className="authorization__submit-btn" type="submit">{submitText}</button>
         </form>
         <div className="authorization__link-container">
-          <p className="authorization__link">Уже зарегистрированы? <Link to="/sign-in" className="header__link">Войти</Link></p>
+          <p className="authorization__link">Уже зарегистрированы? <Link to="/signin" className="header__link">Войти</Link></p>
         </div>
       </div>
     </section>

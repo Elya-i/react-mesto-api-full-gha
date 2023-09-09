@@ -5,8 +5,8 @@ import { Link, useLocation } from 'react-router-dom';
 function Header({ loggedIn, email, onSignOut }) {
   const { pathname } = useLocation();
 
-  const signInPath = '/sign-in';
-  const signUpPath = '/sign-up';
+  const signInPath = '/signin';
+  const signUpPath = '/signup';
 
   const isMainPage = pathname !== signInPath && pathname !== signUpPath;
   const isSignOut = loggedIn && isMainPage;
