@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.elya-i.mesto.nomoredomainsicu.ru'
+import { SERVER_URL } from '../constant'
 
 const checkServerResponse = (response) => {
   if (response.ok) {
@@ -10,7 +10,7 @@ const checkServerResponse = (response) => {
 };
 
 export const register = (email, password) => {
-  return fetch(`${BASE_URL}/signup`, {
+  return fetch(`${SERVER_URL}/signup`, {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -21,41 +21,35 @@ export const register = (email, password) => {
   .then(checkServerResponse);
 };
 
-export const authorize = (password, email) => {
-  return fetch(`${BASE_URL}/signin`, {
+export const authorize = (email, password) => {
+  return fetch(`${SERVER_URL}/signin`, {
     credentials: 'include',
     method: 'POST',
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({password, email})
+    body: JSON.stringify({email, password})
   })
   .then(checkServerResponse)
-  .then((data) => {
-    if (data.token) {
-      localStorage.setItem('jwt', data.token)
-      return data.token
-    }
-  })
 }
 
 export const logout = () => {
-  return fetch(`${BASE_URL}/signout`, {
+  return fetch(`${SERVER_URL}/signout`, {
     credentials: 'include',
     method: 'POST',
     headers: {
       "Content-Type": "application/json"
     }
   })
+  .then(checkServerResponse)
 }
 
-export const checkToken = (token )=> {
-  return fetch(`${BASE_URL}/`, {
+export const checkToken = (token)=> {
+  return fetch(`${SERVER_URL}/users/me`, {
     credentials: 'include',
     method: 'GET',
     headers: {
       "Content-Type": "application/json",
-      "Authorization" : `Bearer ${token}`
     }
   })
   .then(checkServerResponse)

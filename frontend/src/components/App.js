@@ -44,6 +44,10 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    checkToken();
+  }, [])
+
+  useEffect(() => {
     if (loggedIn) {
       Promise.all([api.getUserData(), api.getCardList()])
       .then(([userData, cardList]) => {
@@ -52,6 +56,7 @@ function App() {
       })
       .catch(console.error)
     }
+    
   }, [loggedIn])
 
   function handleRegister(email, password) {
@@ -73,7 +78,7 @@ function App() {
     setInfoTooltipLoading(true);
     auth.authorize(email, password)
     .then(() => {
-      localStorage.setItem('jwt', true);
+      localStorage.setItem('isLoggedIn', true);
       setEmail(email)
       setLoggedIn(true);
       navigate('/', { replace: true });
@@ -89,7 +94,7 @@ function App() {
   function handleSignOut() {
     auth.logout()
     .then(() => {
-      localStorage.removeItem('jwt');
+      localStorage.removeItem('isLoggedIn');
       setLoggedIn(false);
       setEmail('');
       navigate('/signin', { replace: true });
@@ -97,14 +102,9 @@ function App() {
     .catch(err => console.log(err));
 };
 
-  useEffect(() => {
-    checkToken();
-  }, [])
-
   function checkToken()  {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      auth.checkToken(jwt)
+    if (localStorage.getItem('isLoggedIn')) {
+      auth.checkToken()
       .then(({ data }) => {
         setLoggedIn(true);
         setEmail(data.email);

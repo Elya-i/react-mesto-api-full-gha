@@ -1,7 +1,9 @@
+import { SERVER_URL } from '../constant'
+
 class Api {
   constructor(options) {
     this._url = options.url;
-    this._header = options.hraders;
+    this._headers = options.headers;
   }
 
   _checkServerResponse(response) {
@@ -87,7 +89,7 @@ class Api {
 }
 
 const api = new Api({
-  url: 'https://api.elya-i.mesto.nomoredomainsicu.ru',
+  url: SERVER_URL,
   credentials: 'include',
   headers: {
     'Content-Type': 'application/json'

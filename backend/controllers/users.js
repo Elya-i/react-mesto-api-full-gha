@@ -103,6 +103,8 @@ module.exports.loginUser = (req, res, next) => {
       res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
+        sameSite: 'none',
+        secure: true,
       });
       res.send({ message: 'Авторизация прошла успешно' });
     })
@@ -110,5 +112,9 @@ module.exports.loginUser = (req, res, next) => {
 };
 
 module.exports.logoutUser = (req, res) => {
-  res.clearCookie('jwt').send();
+  res.clearCookie('jwt', {
+    sameSite: 'none',
+    secure: true,
+  });
+  res.send({ message: 'Успешный выход из системы' });
 };
