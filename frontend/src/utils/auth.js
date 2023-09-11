@@ -44,7 +44,7 @@ export const logout = () => {
   .then(checkServerResponse)
 }
 
-export const checkToken = (token)=> {
+export const checkToken = () => {
   return fetch(`${SERVER_URL}/users/me`, {
     credentials: 'include',
     method: 'GET',

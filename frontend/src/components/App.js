@@ -105,7 +105,7 @@ function App() {
   function checkToken()  {
     if (localStorage.getItem('isLoggedIn')) {
       auth.checkToken()
-      .then(({ data }) => {
+      .then((data) => {
         setLoggedIn(true);
         setEmail(data.email);
         navigate('/', {replace: true});
