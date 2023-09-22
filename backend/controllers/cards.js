@@ -13,7 +13,7 @@ const ForbiddenError = require('../utils/errors/ForbiddenError'); // 403
 module.exports.getCards = (req, res, next) => {
   Card.find({})
     .then((cards) => res.send(cards))
-    .catch((err) => next(err));
+    .catch(next);
 };
 
 module.exports.createCard = (req, res, next) => {

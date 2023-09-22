@@ -25,7 +25,6 @@ const allowedCors = [
   'http://localhost:3000',
 ];
 
-// eslint-disable-next-line consistent-return
 app.use((req, res, next) => {
   const { origin } = req.headers;
   const { method } = req;
@@ -39,10 +38,10 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
     res.header('Access-Control-Allow-Headers', requestHeaders);
 
-    return res.status(200).send();
+    return res.end();
   }
 
-  next();
+  return next();
 });
 
 app.use(cookieParser());
